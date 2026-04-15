@@ -6,9 +6,15 @@ Fecha: 2026-04-14
 
 import ctypes
 import os
+import sys
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 LIB_PATH = os.path.join(BASE_DIR, "build", "libops.so")
+
+if not os.path.exists(LIB_PATH):
+    print(f"Error: no se encontro la libreria en {LIB_PATH}")
+    print("Primero ejecuta: make")
+    sys.exit(1)
 
 lib = ctypes.CDLL(LIB_PATH)
 
