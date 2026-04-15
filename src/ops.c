@@ -4,7 +4,7 @@
  * Fecha: 2026-04-14
  */
 
-#include "ops.h"
+#include "../include/ops.h"
 
 int c_sum(int a, int b) {
     return asm_sum(a, b);
