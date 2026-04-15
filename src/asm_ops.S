@@ -49,8 +49,8 @@ asm_array_sum:
 .global asm_array_max
 .type asm_array_max, %function
 asm_array_max:
-    // x0 = puntero
-    // w1 = n
+    // x0 = puntero al arreglo
+    // w1 = tamaño n
     cmp w1, #0
     ble .Lmax_empty
 
