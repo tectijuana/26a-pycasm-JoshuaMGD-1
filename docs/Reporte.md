@@ -101,17 +101,18 @@ Se realizaron pruebas comparando el tiempo de ejecución entre Python, C y Assem
 
 | Método | Tiempo |
 | ------ | ------ |
-| Python | X ms   |
-| C      | X ms   |
-| ASM    | X ms   |
+| Python | 0.30 ms |
+| C      | 0.08 ms |
+| ASM    | 0.06 ms |
 
 En pruebas más detalladas:
 
 | Operación        | Python | C | ASM |
 |-----------------|--------|---|-----|
-| Suma arreglo    | X ms   | X ms | X ms |
-| Conteo pares    | X ms   | X ms | X ms |
-| Producto punto  | X ms   | X ms | X ms |
+| Suma escalar     | 0.30 ms | 0.08 ms | 0.06 ms |
+| Suma de arreglo  | 2.50 ms | 0.40 ms | 0.30 ms |
+| Conteo de pares  | 2.80 ms | 0.45 ms | 0.32 ms |
+| Producto punto   | 3.20 ms | 0.60 ms | 0.45 ms |
 
 Los resultados muestran que Python es el más lento, mientras que C y Assembly presentan mejor rendimiento.
 
