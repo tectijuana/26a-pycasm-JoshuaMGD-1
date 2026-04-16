@@ -3,8 +3,8 @@
 ## Autor
 Joshua Daniel Moreno Gonzalez
 
-## Fecha
-2026-04-14
+## Fecha de entrega
+2026-04-16
 
 ## Descripción
 Este proyecto integra Python, C y ARM64 Assembly para comprender la interacción entre lenguajes de alto y bajo nivel.  
