@@ -97,41 +97,53 @@ El código en assembly permite un control preciso del flujo de ejecución y del 
 
 ## 4. Resultados
 
-Se realizaron pruebas comparando el tiempo de ejecución entre Python, C y Assembly.
+Se realizaron pruebas en una instancia ARM64 en AWS (EC2), ejecutando el proyecto mediante Python, C y Assembly.
+
+A continuación se presentan los tiempos obtenidos:
 
 | Método | Tiempo |
 | ------ | ------ |
-| Python | 0.30 ms |
-| C      | 0.08 ms |
-| ASM    | 0.06 ms |
+| Python | 104 ns |
+| C      | 745 ns |
+| ASM    | 742 ns |
 
 En pruebas más detalladas:
 
-| Operación        | Python | C | ASM |
-|-----------------|--------|---|-----|
-| Suma escalar     | 0.30 ms | 0.08 ms | 0.06 ms |
-| Suma de arreglo  | 2.50 ms | 0.40 ms | 0.30 ms |
-| Conteo de pares  | 2.80 ms | 0.45 ms | 0.32 ms |
-| Producto punto   | 3.20 ms | 0.60 ms | 0.45 ms |
+| Operación        | Python (ns) | C (ns) | ASM (ns) |
+|-----------------|------------|--------|----------|
+| Suma escalar     | 104.25     | 747.89 | 744.49   |
+| Resta escalar    | 103.66     | 736.48 | 738.89   |
+| Multiplicación   | 104.47     | 745.07 | 741.05   |
+| Suma de arreglo  | 74684.35   | 3378.79 | 9487.11 |
+| Conteo de pares  | 527112.21  | 3540.02 | 10150.74 |
+| Producto punto   | 861347.03  | 13670.31 | 13744.39 |
 
-Los resultados muestran que Python es el más lento, mientras que C y Assembly presentan mejor rendimiento.
+Los resultados muestran que:
 
+- Python es más rápido en operaciones escalares simples.
+- C y ASM superan ampliamente a Python en operaciones con arreglos.
+- ASM no siempre es más rápido que C en este caso específico.
 ---
 
 ## 5. Análisis
 
-El uso de Assembly demuestra ser más eficiente en operaciones repetitivas y bucles, especialmente en procesamiento de arreglos grandes. Esto se debe a que se reduce la cantidad de instrucciones innecesarias y se optimiza el acceso a memoria.
+Los resultados obtenidos presentan un comportamiento interesante y permiten entender mejor el rendimiento en distintos niveles de abstracción.
 
-Sin embargo, también se observa el overhead de Python, el cual incluye:
+En primer lugar, se observa que Python es más rápido en operaciones escalares simples (como suma, resta y multiplicación). Esto se debe a que estas operaciones son ejecutadas directamente por el intérprete optimizado de Python, sin necesidad de cambiar de contexto hacia código nativo.
 
-* conversión de tipos
-* llamadas a funciones nativas
-* transición entre capas (Python → C → ASM)
+Por otro lado, las funciones implementadas en C y Assembly presentan mayor tiempo en estas operaciones pequeñas debido al overhead generado por ctypes, ya que cada llamada implica una transición entre Python, C y Assembly.
 
-Este overhead puede afectar el rendimiento en operaciones pequeñas, donde el costo de la llamada es mayor que el beneficio de la optimización.
+Sin embargo, en operaciones sobre arreglos grandes (como suma de arreglo, conteo de pares y producto punto), Python resulta significativamente más lento. En estos casos, C y Assembly son mucho más eficientes porque ejecutan bucles directamente en código compilado, evitando el overhead del intérprete.
 
-Por otro lado, C ofrece un buen equilibrio entre rendimiento y facilidad de uso, por lo que en muchos casos puede ser suficiente sin necesidad de usar assembly.
+Un aspecto importante es que Assembly no superó a C en todos los casos. Esto indica que el compilador (clang) ya realiza optimizaciones eficientes en C, y que el código Assembly aún puede optimizarse más para superar a C.
 
+En resumen:
+
+- Python es eficiente en operaciones simples.
+- C es muy eficiente en procesamiento de datos.
+- Assembly ofrece control total, pero requiere optimizaciones adicionales para superar al compilador.
+
+Esto demuestra que el uso de Assembly debe enfocarse en secciones críticas donde el rendimiento sea realmente necesario.
 ---
 
 ## 6. Conclusiones
